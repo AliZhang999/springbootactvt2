@@ -163,12 +163,10 @@ public class HelloController {
                 //throw new BusinessException("获取流程实例ID[" + pProcessInstanceId + "]对应的历史流程实例失败！");
             } else {
                 // 获取流程定义
-                ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
-                        .getDeployedProcessDefinition(historicProcessInstance.getProcessDefinitionId());
+                ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService).getDeployedProcessDefinition(historicProcessInstance.getProcessDefinitionId());
 
                 // 获取流程历史中已执行节点，并按照节点在流程中执行先后顺序排序
-                List<HistoricActivityInstance> historicActivityInstanceList = historyService.createHistoricActivityInstanceQuery()
-                        .processInstanceId(pProcessInstanceId).orderByHistoricActivityInstanceId().asc().list();
+                List<HistoricActivityInstance> historicActivityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(pProcessInstanceId).orderByHistoricActivityInstanceId().asc().list();
 
                 // 已执行的节点ID集合
                 List<String> executedActivityIdList = new ArrayList<String>();
@@ -176,7 +174,6 @@ public class HelloController {
                 //logger.info("获取已经执行的节点ID");
                 for (HistoricActivityInstance activityInstance : historicActivityInstanceList) {
                     executedActivityIdList.add(activityInstance.getActivityId());
-
                     //logger.info("第[" + index + "]个已执行节点=" + activityInstance.getActivityId() + " : " +activityInstance.getActivityName());
                     index++;
                 }
